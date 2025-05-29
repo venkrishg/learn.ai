@@ -1,0 +1,210 @@
+/* Basic Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Main Container */
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Navigation Styling */
+nav {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+}
+nav a:hover {
+    background: #555;
+    border-radius: 5px;
+}
+nav span {
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+}
+
+/* Form Styling */
+form {
+    margin-bottom: 20px;
+}
+form div {
+    margin-bottom: 10px;
+}
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+form input[type="text"],
+/* form input[type="email"], */ /* Removed as no email fields are used now */
+/* form input[type="password"], */ /* Removed as no password fields are used now */
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* So padding doesn't affect width */
+}
+form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+form input[type="submit"],
+.btn { /* General button class */
+    background: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+form input[type="submit"]:hover,
+.btn:hover {
+    background: #555;
+}
+
+/* Video List Styling */
+.video-list {
+    list-style: none;
+    padding: 0;
+}
+.video-list li {
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+}
+.video-list li h3 {
+    margin-top: 0;
+}
+.video-list li a {
+    text-decoration: none;
+    color: #333;
+}
+.video-list li a:hover {
+    color: #555;
+}
+
+/* Video Player Styling */
+.video-player {
+    width: 100%;
+    max-width: 100%; /* Responsive */
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Flashed Messages Styling */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
+
+/* Error messages for forms */
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+/* Review Section Styling */
+.review-form-container { /* Assuming a wrapper div might be added later if needed, or style form directly */
+    margin-bottom: 20px; 
+}
+
+/* Ensure select elements in forms match other input styles */
+form select.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff; /* Ensure background for select */
+    height: auto; /* Or set a specific height similar to inputs if needed */
+}
+
+.average-rating-display { /* Assuming a class might be added to the h4 or its container */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.reviews-list-container {
+    margin-top: 20px;
+}
+
+.review-item {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.review-item .rating {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px; /* Add some space below rating */
+    display: block; /* Ensure it takes its own line or for margin to work */
+}
+
+.review-item .comment {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.review-item .date {
+    font-size: 0.85em;
+    color: #777;
+    margin-top: 10px; /* Add some space above date */
+    display: block; /* Ensure it takes its own line or for margin to work */
+}

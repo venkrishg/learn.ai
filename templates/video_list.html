@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block page_title %}Videos{% endblock %}
+{% block content %}
+    <h2>All Videos</h2>
+    {% if videos %}
+        <ul class="video-list">
+            {% for video in videos %}
+                <li>
+                    <h3><a href="{{ url_for('view_video', video_id=video.id) }}">{{ video.title }}</a></h3>
+                    <p>{{ video.description }}</p>
+                    <p><small>Uploaded on: {{ video.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center">No videos uploaded yet.</p>
+    {% endif %}
+{% endblock %}

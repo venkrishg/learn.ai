@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block page_title %}Editor Login{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Editor Mode Login</h2>
+    <form method="POST" action="{{ url_for('editor_login') }}{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}" class="form-styled">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", size=32) }}<br>
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                <span class="error-message">[{{ error }}]</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skillscrolls - {% block page_title %}Welcome{% endblock %}</title> {# New title structure #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('list_courses') }}" class="navbar-brand">Skillscrolls</a> {# Home redirects to list_courses #}
+        <a href="{{ url_for('list_courses') }}">Courses</a>
+        <a href="{{ url_for('video_list') }}">All Videos</a>
+        
+        {% if session.get('is_editor') %}
+            <a href="{{ url_for('add_course') }}">Add Course</a>
+            <a href="{{ url_for('upload_video') }}">Upload Video</a>
+            <a href="{{ url_for('editor_logout') }}">Editor Logout</a>
+        {% else %}
+            {# "Upload Video" is not shown to non-editors; its route is protected. #}
+            {# "Add Course" is not shown to non-editors; its route is protected. #}
+            <a href="{{ url_for('editor_login') }}">Editor Login</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

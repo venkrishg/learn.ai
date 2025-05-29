@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block page_title %}Available Courses{% endblock %}
+
+{% block content %}
+    <h2>Available Courses</h2>
+    {% if courses %}
+        <ul class="course-list"> {# Assuming a .course-list class for styling if needed #}
+            {% for course in courses %}
+                <li>
+                    <h3><a href="{{ url_for('view_course', course_id=course.id) }}">{{ course.title }}</a></h3>
+                    {% if course.description %}
+                        <p>{{ course.description }}</p>
+                    {% endif %}
+                    <p><small>Created on: {{ course.created_at.strftime('%Y-%m-%d') }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No courses available at the moment.</p>
+    {% endif %}
+    
+    {# Optionally, add a link for editors to add a new course if that's desired on this public page #}
+    {# This would require checking editor status in the template, which we are moving away from for public views #}
+    {# For now, adding courses is done via direct navigation to /add_course by an editor #}
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block page_title %}{{ video.title }}{% endblock %}
+{% block content %}
+    <h2>{{ video.title }}</h2>
+    <p>{{ video.description }}</p>
+    <video class="video-player" controls>
+        <source src="{{ url_for('serve_video_file', filename=video.filename) }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p><small>Uploaded on: {{ video.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</small></p>
+    
+    <hr>
+    <h4 class="average-rating-display">Average Rating: {{ "%.1f" | format(avg_rating if avg_rating is not none else 0) }} / 5 Stars ({{ reviews|length }} reviews)</h4>
+    
+    <hr>
+    <h3>Leave a Review</h3>
+    <form method="POST" action="{{ url_for('view_video', video_id=video.id) }}" class="form-styled review-form-container">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.rating.label }}<br>
+            {{ form.rating(class="form-control") }}
+            {% if form.rating.errors %}
+                {% for error in form.rating.errors %}<span class="error-message">[{{ error }}]</span>{% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.comment.label }}<br>
+            {{ form.comment(rows=4, class="form-control") }}
+            {% if form.comment.errors %}
+                {% for error in form.comment.errors %}<span class="error-message">[{{ error }}]</span>{% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {{ form.submit_review(class="btn btn-primary mt-2") }} {# Changed form.submit to form.submit_review #}
+        </div>
+    </form>
+
+    <hr>
+    <div class="reviews-list-container">
+        <h3>Reviews</h3>
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="review-item">
+                    <p><span class="rating">Rating: {{ review.rating }}/5</span></p>
+                    {% if review.comment %}
+                        <p class="comment">{{ review.comment }}</p>
+                    {% endif %}
+                    <p><span class="date">Reviewed on: {{ review.created_at.strftime('%Y-%m-%d %H:%M') }}</span></p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+        {% endif %}
+    </div>
+
+    <hr>
+    <h3>Additional Materials</h3>
+    {% if session.get('is_editor') %}
+        <div class="add-material-form-container form-styled review-form-container"> {# Reusing review-form-container for consistent spacing #}
+            <h4>Add New Material</h4>
+            <form method="POST" action="{{ url_for('view_video', video_id=video.id) }}"> {# This form tag is problematic; should be part of material_form #}
+                {{ material_form.hidden_tag() }}
+                <div class="form-group">
+                    {{ material_form.material_type.label }}<br>
+                    {{ material_form.material_type(class="form-control") }}
+                    {% if material_form.material_type.errors %}
+                        {% for error in material_form.material_type.errors %}<span class="error-message">[{{ error }}]</span>{% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ material_form.content.label }} (for Comment or Link URL)<br>
+                    {{ material_form.content(rows=3, class="form-control") }}
+                    {% if material_form.content.errors %}
+                        {% for error in material_form.content.errors %}<span class="error-message">[{{ error }}]</span>{% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ material_form.file.label }} (for File Upload)<br>
+                    {{ material_form.file(class="form-control-file") }}
+                    {% if material_form.file.errors %}
+                        {% for error in material_form.file.errors %}<span class="error-message">[{{ error }}]</span>{% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ material_form.submit_material(class="btn btn-secondary mt-2") }} {# Changed material_form.submit to material_form.submit_material #}
+                </div>
+            </form> {# This closes the inner form, outer one for review form is above #}
+        </div>
+        <hr>
+    {% endif %}
+
+    {% if materials %}
+        <ul class="materials-list">
+            {% for material in materials %}
+                <li class="material-item">
+                    {% if material.material_type == 'comment' %}
+                        <p><strong>Comment:</strong> {{ material.content }}</p>
+                    {% elif material.material_type == 'link' %}
+                        <p><strong>Link:</strong> <a href="{{ material.content }}" target="_blank">{{ material.content }}</a></p>
+                    {% elif material.material_type == 'file' %}
+                        <p><strong>File:</strong> <a href="{{ url_for('download_material', material_id=material.id) }}">{{ material.original_filename or 'Download File' }}</a></p>
+                    {% endif %}
+                    <p><small>Added on: {{ material.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No additional materials for this video.</p>
+    {% endif %}
+
+    <a href="{{ url_for('video_list') }}" class="btn mt-1 mb-1">Back to Video List</a>
+{% endblock %}

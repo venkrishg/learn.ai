@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ course.title }}</h2>
+    {% if course.description %}
+        <p>{{ course.description }}</p>
+    {% endif %}
+    <p><small>Course created on: {{ course.created_at.strftime('%Y-%m-%d') }}</small></p>
+
+    <hr>
+    <h3>Videos in this Course</h3>
+    {% if videos %}
+        <ul class="video-list"> {# Using existing .video-list class for consistency #}
+            {% for video in videos %}
+                <li>
+                    <h4><a href="{{ url_for('view_video', video_id=video.id) }}">{{ video.title }}</a></h4>
+                    {% if video.description %}
+                        <p>{{ video.description }}</p>
+                    {% endif %}
+                    <p><small>Uploaded on: {{ video.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</small></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No videos have been added to this course yet.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('list_courses') }}" class="btn mt-1">Back to Courses List</a></p>
+{% endblock %}
